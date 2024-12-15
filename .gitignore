@@ -1,0 +1,7 @@
+.*/
+__*__
+ckpt/*
+data/*
+work_audios/*
+
+!.gitkeep

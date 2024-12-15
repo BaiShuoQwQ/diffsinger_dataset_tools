@@ -1,0 +1,29 @@
+The following files from https://github.com/openvpi/MakeDiffSinger are protected under the BSD 3-Clause License agreement:
+    check_tg.py
+    validate_labels.py
+    validate_labels.py
+    summary_pitch.py
+    modules.ds_tools.add_ph_num.py
+    modules.ds_tools.ds2csv.py
+    modules.ds_tools.estimate_midi.py
+    modules.ds_tools.get_pitch.py
+
+The following files from https://github.com/autumn-DL/FoxBreatheLabeler are protected dual-licensed under the terms of the Apache License 2.0 and the GNU Affero General Public License v3.0 (AGPLv3).
+## For Commercial Use
+If you intend to use this software for commercial purposes, you must comply with the terms of the AGPLv3. In addition, you must retain all copyright notices and disclaimers from the Apache License 2.0. You can find a copy of the AGPLv3 license at [GNU AGPLv3 License](https://www.gnu.org/licenses/agpl-3.0.html).
+## For Non-Commercial Personal Use
+If you are an individual using this software for non-commercial purposes (excluding companies), you may use, modify, and distribute this software under the terms of the Apache License 2.0. However, you must not alter or remove any references to the AGPLv3 terms, and you must keep the original licensing intact in any copies or derivative works.
+    FBL_infer.py
+    modules.trainCLS
+    modules.module_lib
+    modules.Models
+    modules.libs
+
+The other files are protected under the terms of the GNU Affero General Public License v3.0 (AGPLv3).
+    Including the following files from https://github.com/qiuqiao/SOFA.
+        SOFA_infer.py
+        modules.AP_detector
+        modules.g2p
+        modules.layer
+        modules.utils
+    And other files.

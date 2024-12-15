@@ -1,0 +1,4 @@
+singer: opencpop
+dictionary: "dictionary/opencpop-extension.txt"
+SOFA_ckpt: "ckpt/SOFAft_0508-40k_byBaiShuo.ckpt"
+FBL_ckpt: "ckpt/FBL_model.ckpt"
