@@ -158,7 +158,7 @@ def export(ckpt_path, wav_dir, tg_dir, tg_out_dir, ap_threshold=0.4, ap_dur=0.08
     tg_dir = pathlib.Path(tg_dir)
     tg_out_dir = pathlib.Path(tg_out_dir)
 
-    config_file = pathlib.Path(ckpt_path).with_name('FBL_config.yaml')
+    config_file = pathlib.Path(ckpt_path).with_name('config.yaml')
     config = get_config(config_file)
 
     time_scale = 1.0 / (config['audio_sample_rate'] / config['hop_size'])
@@ -187,7 +187,7 @@ def export(ckpt_path, wav_dir, tg_dir, tg_out_dir, ap_threshold=0.4, ap_dur=0.08
             ap_probability = model(mel)
             ap_probability = torch.sigmoid(ap_probability)
 
-            sxp = ap_probability.cpu().numpy()[0][0]
+            sxp = ap_probability.detach().cpu().numpy()[0][0]
 
             segments = find_segments_dynamic(sxp, time_scale, threshold=ap_threshold,
                                              ap_threshold=int(ap_dur / time_scale))

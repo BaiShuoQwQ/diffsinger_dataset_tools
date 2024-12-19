@@ -96,7 +96,7 @@ class Slicer:
                 chunks.append(_apply_slice(audio, sil_tags[-1][1], samples.shape[0]))
             return chunks
  
-def slice_audio(audio_path, out_dir, db_threshold=-32, min_length=3000, win_l=200, win_s=16, max_silence_kept=500):
+def slice_audio(audio_path, out_dir, db_threshold=-40, min_length=3000, win_l=200, win_s=16, max_silence_kept=500):
     audio_path = Path(audio_path)
     out_dir = Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)

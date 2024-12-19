@@ -44,7 +44,7 @@ class EstimateMidi():
             end_idx = math.ceil(end / timestep)
             word_pitch = pitch[start_idx: end_idx]
             word_uv = uv[start_idx: end_idx]
-            skip_frames = min(int(0.2 * (end_idx - start_idx)), end_idx - start_idx - 1)
+            skip_frames = min(int(0.3 * (end_idx - start_idx)), end_idx - start_idx - 1)
             keep_frames = min(int(0.5 * (end_idx - start_idx)), end_idx - start_idx - skip_frames)
             word_valid_pitch = np.extract(~word_uv[skip_frames:(skip_frames+keep_frames)] & (word_pitch[skip_frames:(skip_frames+keep_frames)] >= 0), word_pitch[skip_frames:(skip_frames+keep_frames)])
             if (len(word_valid_pitch) < (1 - self.rest_uv_ratio) * (end_idx - start_idx)) or (flag == True and ph_num[0] == 1):
