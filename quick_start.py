@@ -38,7 +38,7 @@ def quick_start():
         folder.mkdir(parents=True, exist_ok=True)
 
     #移动音频
-    if any(work_audios.iterdir()) and any(original.iterdir()):
+    if any(work_audios.glob('*.wav')) and any(original.glob('*.wav')):
         print(f"Error: folder {original} is not empty, change singer in tools_config.yaml or clear folder")
         exit(1)
     for file in work_audios.glob('*.wav'):

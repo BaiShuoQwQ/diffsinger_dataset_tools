@@ -35,10 +35,6 @@ def _gather_ds(tg_path, wav_path, dictionary, fix_words=False, some_infer=None):
     
     em = EstimateMidi()
     note_seq, note_dur, f0_seq, f0_timestep = em.estimate_note(wav_path, ph_dur, [int(x) for x in ph_num])
-    if some_infer:
-        note_seq, note_dur = some_infer.batch_infer(wav_path, ph_dur, ph_num)
-
-    note_slur = ["0" for _ in note_dur]
 
     ph_num_list = [int(x) for x in ph_num]
     index_in_ph_seq = 0
@@ -47,6 +43,13 @@ def _gather_ds(tg_path, wav_path, dictionary, fix_words=False, some_infer=None):
         if any(word in {"AP", "SP"} for word in group):
             note_seq[i]='rest'
         index_in_ph_seq += size
+        
+    if some_infer:
+        note_seq, note_dur = some_infer.batch_infer(wav_path, ph_dur, ph_num)
+
+    note_slur = ["0" for _ in note_dur]
+
+
     
 
 
