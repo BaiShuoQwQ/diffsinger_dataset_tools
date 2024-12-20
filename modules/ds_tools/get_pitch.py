@@ -1,6 +1,7 @@
 import pathlib
 import numpy as np
 import parselmouth
+from itertools import chain
 
 def norm_f0(f0):
     f0 = np.log2(f0)
@@ -65,7 +66,8 @@ def get_pitch_rmvpe(wav_data, hop_size, audio_sample_rate, interp_uv=True):
     global rmvpe
     if rmvpe is None:
         from modules.rmvpe import RMVPE
-        rmvpe = RMVPE(pathlib.Path('ckpt') / 'rmvpe_model.ckpt')
+        rmvpe = RMVPE(next(iter(chain((pathlib.Path('ckpt') / 'rmvpe').glob('*.pt'), (pathlib.Path('ckpt') / 'rmvpe').glob('*.ckpt'))), None))
+
     f0 = rmvpe.infer_from_audio(wav_data, sample_rate=audio_sample_rate)
     uv = f0 == 0
     f0, uv = interp_f0(f0, uv)
