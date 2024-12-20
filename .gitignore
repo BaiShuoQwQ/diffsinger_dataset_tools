@@ -1,6 +1,9 @@
 .*/
 __*__
-ckpt/*
+ckpt/FBL/*
+ckpt/SOFA/*
+ckpt/SOME/*
+ckpt/rmvpe/*
 data/*
 work_audios/*
 
