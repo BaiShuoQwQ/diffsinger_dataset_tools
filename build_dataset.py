@@ -81,4 +81,4 @@ def main(wavs, tg, dataset, skip_silence_insertion, wav_subtype):
     build_dataset(wavs, tg, dataset, skip_silence_insertion, wav_subtype)
 
 if __name__ == '__main__':
-    build_dataset()
+    main()
