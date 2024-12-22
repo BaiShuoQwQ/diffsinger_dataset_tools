@@ -106,6 +106,10 @@ def slice_tg(wavs, tg, out, preserve_sentence_names, wav_subtype, overwrite):
                     minTime=min_time - sentence.minTime, maxTime=max_time - sentence.minTime, mark=phone.mark
                 )
 
+            marks_set = {ph.mark for ph in sentence_phones_tier}
+            if marks_set.issubset(SP_mark | AP_mark):
+                continue
+
             if words_tier:
                 sentence_tg.append(sentence_words_tier)
             sentence_tg.append(sentence_phones_tier)
