@@ -81,9 +81,4 @@ def main(wavs, tg, dataset, skip_silence_insertion, wav_subtype):
     build_dataset(wavs, tg, dataset, skip_silence_insertion, wav_subtype)
 
 if __name__ == '__main__':
-    wavs="D:\diffsinger\oniku\wav"
-    tg="D:\diffsinger\oniku\wav"
-    dataset="D:\diffsinger\SOFA改\data\\full_label\\oniku日语"
-    skip_silence_insertion=True
-    wav_subtype="PCM_16"
-    build_dataset(wavs, tg, dataset, skip_silence_insertion, wav_subtype)
+    build_dataset()
