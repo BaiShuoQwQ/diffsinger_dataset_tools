@@ -3,4 +3,4 @@ language: zh
 dictionary: "dictionary/opencpop-extension.txt"
 SOFA_ckpt: "ckpt/SOFA/SOFAft_0508-40k_byBaiShuo.ckpt"
 FBL_ckpt: "ckpt/FBL/FBL_model.ckpt"
-SOME_ckpt: "ckpt/SOME/model_steps_64000_simplified.ckpt"
+SOME_ckpt: "ckpt/SOME/model_ckpt_steps_100000_simplified.ckpt"

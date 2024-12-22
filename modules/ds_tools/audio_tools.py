@@ -16,5 +16,6 @@ def wav_total_length(wavs):
             return librosa.get_duration(filename=str(wav_path)) / 3600.
         elif wav_path.is_dir():
             for ch in wav_path.iterdir():
-                total_length += wav_total_length(ch)
+                if ch.is_file() and ch.suffix == '.wav':
+                    total_length += wav_total_length(ch)
             return total_length

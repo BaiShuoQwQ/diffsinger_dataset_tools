@@ -36,7 +36,7 @@ def quick_start():
     
     for folder in [work_audios, base_path, original, norm, wavs, lab, textgrids, bad, ds, dataset]:
         folder.mkdir(parents=True, exist_ok=True)
-
+    '''
     #移动音频
     if any(work_audios.glob('*.wav')) and any(original.glob('*.wav')):
         print(f"Error: folder {original} is not empty, change singer in tools_config.yaml or clear folder")
@@ -69,14 +69,15 @@ def quick_start():
     #生成textgrid
     sofa_infer(SOFA_ckpt, wavs, lab, textgrids, "force", "Dictionary", "NoneAPDetector", "lab", "textgrid", True, dictionary=dictionary)
     print("Step 4: SOFA complete")
-
+    '''
     #呼吸标注
-    export(FBL_ckpt, wavs, textgrids, textgrids)
+    #export(FBL_ckpt, wavs, textgrids, textgrids)
+    export(FBL_ckpt, wavs, textgrids, wavs)
     print("Step 5: FBL complete")
-
+    '''
     #筛选标注
     confidence = textgrids / "confidence.csv"
-    move_bad(wavs, textgrids, bad, confidence)
+    move_bad(wavs, textgrids, bad, confidence, 0.3)
     print("Step 6: move_bad complete")
 
     #生成ds
@@ -88,7 +89,7 @@ def quick_start():
     print("Step 8: dataset complete")
     print("Congratulations! All the steps have been completed.\nThis project is produced by Bai_Shuo.")
 
-    '''
+
     #清理文件
     shutil.rmtree(norm)
     shutil.rmtree(wavs)

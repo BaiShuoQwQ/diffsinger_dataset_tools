@@ -9,6 +9,7 @@ from modules.some.SOME_infer import SOMEINFER
 
 
 def _gather_ds(tg_path, wav_path, dictionary, fix_words=False, some_infer=None):
+    print(tg_path)
     tg_path = Path(tg_path)
     wav_path = Path(wav_path)
     tg = TextGrid.fromFile(tg_path)
