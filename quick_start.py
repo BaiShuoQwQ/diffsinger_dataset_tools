@@ -7,6 +7,8 @@ from modules.ds_tools.loudness_norm import loudness_norm_file
 from modules.ds_tools.slicer import slice_audio
 from modules.ds_tools.wav2words import funasr_folder, pinyin_folder
 from SOFA_infer import sofa_infer
+from validate_labels import validate_labels
+from summary_pitch import summary_pitch
 from FBL_infer import export
 from modules.ds_tools.filter_bad import move_bad
 from modules.ds_tools.textgrid2ds import textgrid2ds
@@ -36,7 +38,7 @@ def quick_start():
     
     for folder in [work_audios, base_path, original, norm, wavs, lab, textgrids, bad, ds, dataset]:
         folder.mkdir(parents=True, exist_ok=True)
-    '''
+
     #移动音频
     if any(work_audios.glob('*.wav')) and any(original.glob('*.wav')):
         print(f"Error: folder {original} is not empty, change singer in tools_config.yaml or clear folder")
@@ -64,20 +66,23 @@ def quick_start():
     #生成lab
     funasr_folder(wavs, lab)
     pinyin_folder(lab, lab, "dictionary/phrases_dict.txt")
+    validate_labels(lab, wavs, dictionary, 'lab', True)
     print("Step 3: lab complete")
+
 
     #生成textgrid
     sofa_infer(SOFA_ckpt, wavs, lab, textgrids, "force", "Dictionary", "NoneAPDetector", "lab", "textgrid", True, dictionary=dictionary)
+    validate_labels(textgrids, wavs, dictionary, 'textgrid', True)
+    summary_pitch(wavs, textgrids)
     print("Step 4: SOFA complete")
-    '''
+
     #呼吸标注
-    #export(FBL_ckpt, wavs, textgrids, textgrids)
-    export(FBL_ckpt, wavs, textgrids, wavs)
+    export(FBL_ckpt, wavs, textgrids, textgrids)
     print("Step 5: FBL complete")
-    '''
+
     #筛选标注
     confidence = textgrids / "confidence.csv"
-    move_bad(wavs, textgrids, bad, confidence, 0.3)
+    move_bad(wavs, textgrids, bad, confidence, ratio=0.1)
     print("Step 6: move_bad complete")
 
     #生成ds
@@ -86,18 +91,18 @@ def quick_start():
 
     #构建数据集
     ds_dataset(wavs, ds, dataset)
+    validate_labels(dataset, wavs, dictionary, 'csv', summary=True)
     print("Step 8: dataset complete")
     print("Congratulations! All the steps have been completed.\nThis project is produced by Bai_Shuo.")
-
-
+    
     #清理文件
-    shutil.rmtree(norm)
-    shutil.rmtree(wavs)
-    shutil.rmtree(lab)
-    shutil.rmtree(textgrids)
-    shutil.rmtree(bad)
-    shutil.rmtree(ds)
-    '''
+    # shutil.rmtree(norm)
+    # shutil.rmtree(wavs)
+    # shutil.rmtree(lab)
+    # shutil.rmtree(textgrids)
+    # shutil.rmtree(bad)
+    # shutil.rmtree(ds)
+
 
 if __name__ == '__main__':
     quick_start()
