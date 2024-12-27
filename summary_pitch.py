@@ -6,22 +6,24 @@ import numpy as np
 import parselmouth as pm
 import tqdm
 from textgrid import TextGrid
-import distribution
+from modules.ds_tools import distribution
 
 
 def summary_pitch(wavs, tg):
     wavs = pathlib.Path(wavs)
     tg_dir = pathlib.Path(tg)
     del tg
-    filelist = list(wavs.glob('*.wav'))
+    tglist = list(tg_dir.glob('*.TextGrid'))
 
     pit_map = {}
     f0_min = 40.
     f0_max = 1100.
     voicing_thresh_vowel = 0.45
-    for wavfile in tqdm.tqdm(filelist):
+    for tg_file in tqdm.tqdm(tglist):
+        filename = tg_file.stem
+        wavfile = wavs / f"{filename}.wav"
         tg = TextGrid()
-        tg.read(tg_dir / wavfile.with_suffix('.TextGrid').name)
+        tg.read(tg_file)
         timestep = 0.01
         f0 = pm.Sound(str(wavfile)).to_pitch_ac(
             time_step=timestep,

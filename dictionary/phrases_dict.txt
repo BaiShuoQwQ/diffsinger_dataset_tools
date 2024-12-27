@@ -2,6 +2,7 @@
 陟罚臧否:zhi4,fa2,zang2,pi3
 汤汤:shang1,shang1
 到了:dao4,le1
+落下:luo4,xia5
 破的:po4,de5
 重场:zhong4,chang3
 很重:hen3,zhong4
@@ -2499,7 +2500,6 @@
 利害:lì,hai
 利索:lì,suo
 利落:lì,luo
-到了:dào,liǎo
 刺中:cì,zhòng
 削尖:xiāo,jiān
 削球:xiāo,qiú

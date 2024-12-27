@@ -1,12 +1,14 @@
 The following files from https://github.com/openvpi/MakeDiffSinger are protected under the BSD 3-Clause License agreement:
     check_tg.py
     validate_labels.py
-    validate_labels.py
+    validate_lengths.py
     summary_pitch.py
+    build_dataset.py
     modules.ds_tools.add_ph_num.py
     modules.ds_tools.ds2csv.py
     modules.ds_tools.estimate_midi.py
     modules.ds_tools.get_pitch.py
+    modules.ds_tools.distribution.py
 
 The following files from https://github.com/autumn-DL/FoxBreatheLabeler are protected dual-licensed under the terms of the Apache License 2.0 and the GNU Affero General Public License v3.0 (AGPLv3).
     FBL_infer.py

@@ -1,6 +1,6 @@
-singer: opencpop
+singer: test
 language: zh
 dictionary: "dictionary/opencpop-extension.txt"
-SOFA_ckpt: ""ckpt/SOFA/mandarin_1224-96k_byBaiShuo.ckpt"
+SOFA_ckpt: "ckpt/SOFA/mandarin_1224-96k_byBaiShuo.ckpt"
 FBL_ckpt: "ckpt/FBL/FBL_model.ckpt"
 SOME_ckpt: "ckpt/SOME/model_ckpt_steps_100000_simplified.ckpt"

@@ -5,7 +5,7 @@ from pypinyin import lazy_pinyin, load_phrases_dict, Style
 
 class Wav2Words():
     def __init__(self, funasr_model=None, pinyin_dict=None, lang=None):
-        self.model = funasr_model or AutoModel(model="paraformer-zh", vad_model="fsmn-vad")
+        self.model = funasr_model or AutoModel(model="paraformer-zh", vad_model="fsmn-vad", disable_update=True)
         self.pinyin_dict = pinyin_dict
         self.lang = lang or 'zh'
 

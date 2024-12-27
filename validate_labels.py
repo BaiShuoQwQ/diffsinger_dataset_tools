@@ -3,7 +3,7 @@ import csv
 import click
 import matplotlib.pyplot as plt
 import tqdm
-import distribution
+from modules.ds_tools import distribution
 from textgrid import TextGrid
 
 # noinspection PyShadowingBuiltins
@@ -14,6 +14,7 @@ def validate_labels(dir, wavs, dictionary, type, summary):
         rules = [ln.strip().split('\t') for ln in f.readlines()]
     dictionary = {}
     phoneme_set = set()
+    ignore_set = {'SP', 'AP'}
     for r in rules:
         phonemes = r[1].split()
         dictionary[r[0]] = phonemes
@@ -47,7 +48,7 @@ def validate_labels(dir, wavs, dictionary, type, summary):
             with open(annotation, 'r', encoding='utf8') as f:
                 syllables = f.read().strip().split()
             if not syllables:
-                print(f'lab file \'{annotation}\' is empty!')
+                print(f' lab file \'{annotation}\' is empty!')
                 check_failed = True
             else:
                 oov = []
@@ -63,6 +64,7 @@ def validate_labels(dir, wavs, dictionary, type, summary):
                     check_failed = True
 
     elif type=='textgrid':
+        phoneme_set.update(ignore_set)
         if wavs:
             filelist = list(wav_dir.glob('*.wav'))
         else:
@@ -88,50 +90,52 @@ def validate_labels(dir, wavs, dictionary, type, summary):
             else:
                 oov = []
                 for s in syllables:
-                    if s not in dictionary:
+                    if s not in phoneme_set:
                         oov.append(s)
-                    else:
-                        for ph in dictionary[s]:
-                            phoneme_map[ph] += 1
-                        covered.update(dictionary[s])
+                    elif s not in ignore_set:
+                        phoneme_map[s] += 1
+                        covered.add(s)
                 if oov:
                     print(f'Syllable(s) {oov} not allowed in TextGrid file \'{annotation}\'')
                     check_failed = True
 
     elif type=='csv':
+        phoneme_set.update(ignore_set)
         if label_dir.is_file() and label_dir.suffix.lower() == '.csv':
             csv_file = label_dir
         elif label_dir.is_dir():
-            csv_file = label_dir.rglob('*.csv')
-            if not any(csv_file):
+            csv_files = list(label_dir.rglob('*.csv'))
+            if not any(csv_files):
                 print(f'No csv found!')
                 csv_file = None
+            else:
+                csv_file = csv_files[0]
         if csv_file.is_file():
             item_names = []
             with open(csv_file, "r", encoding="utf-8") as f:
-                for trans_line in tqdm(csv.DictReader(f)):
+                for trans_line in tqdm.tqdm(csv.DictReader(f)):
                     item_name = trans_line["name"]
                     item_names.append(item_name)
                     syllables = trans_line["ph_seq"].strip().split()
-                if not syllables:
-                    print(f'csv file \'{csv_file}\' is empty!')
-                    check_failed = True
-                else:
-                    oov = []
-                    for s in syllables:
-                        if s not in dictionary:
-                            oov.append(s)
-                        else:
-                            for ph in dictionary[s]:
-                                phoneme_map[ph] += 1
-                            covered.update(dictionary[s])
-                    if oov:
-                        print(f'Syllable(s) {oov} not allowed in csv \'{csv_file}\'')
+                    if not syllables:
+                        print(f'csv file \'{csv_file}\' is empty!')
                         check_failed = True
+                    else:
+                        oov = []
+                        for s in syllables:
+                            if s not in phoneme_set:
+                                oov.append(s)
+                            elif s not in ignore_set:
+                                phoneme_map[s] += 1
+                                covered.add(s)
+                        if oov:
+                            print(f'Syllable(s) {oov} not allowed in csv \'{csv_file}\'')
+                            check_failed = True
             if wavs:
                 filelist = list(wav_dir.glob('*.wav'))
-                missing_wavs = [f.name for f in filelist if f.name not in item_names]
-                print(f'label not found in CSV: {missing_wavs}')
+                missing_wavs = [f.stem for f in filelist if f.stem not in item_names]
+                if missing_wavs:
+                    print(f'label not found in CSV: {missing_wavs}')
 
     # Phoneme coverage
     uncovered = phoneme_set - covered
@@ -145,8 +149,9 @@ def validate_labels(dir, wavs, dictionary, type, summary):
         print('All annotations are well prepared.')
 
     if summary:
-        phoneme_list = sorted(phoneme_set)
-        phoneme_counts = [phoneme_map[ph] for ph in phoneme_list]
+        phoneme_list = sorted((phoneme_set - ignore_set))
+        phoneme_counts = [phoneme_map.get(ph, 0) for ph in phoneme_list]
+
         distribution.draw_distribution(
             title='Phoneme Distribution Summary',
             x_label='Phoneme',
