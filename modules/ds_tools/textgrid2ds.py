@@ -79,7 +79,8 @@ def textgrid2ds(tg_folder, wav_folder, ds_folder, dictionary, fix_words=False, u
     if use_some and some_model:
         some_infer = SOMEINFER(model_path=some_model)
     
-    for tg_file in tqdm(tg_folder.glob('*.TextGrid')):
+    tg_list = list(tg_folder.glob('*.TextGrid'))
+    for tg_file in tqdm(tg_list):
         tg_file_name = tg_file.stem
         wav_file_path = wav_folder / f"{tg_file_name}.wav"
         

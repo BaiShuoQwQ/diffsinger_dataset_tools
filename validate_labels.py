@@ -65,6 +65,7 @@ def validate_labels(dir, wavs, dictionary, type, summary):
 
     elif type=='textgrid':
         phoneme_set.update(ignore_set)
+        covered.update(ignore_set)
         if wavs:
             filelist = list(wav_dir.glob('*.wav'))
         else:
@@ -101,6 +102,7 @@ def validate_labels(dir, wavs, dictionary, type, summary):
 
     elif type=='csv':
         phoneme_set.update(ignore_set)
+        covered.update(ignore_set)
         if label_dir.is_file() and label_dir.suffix.lower() == '.csv':
             csv_file = label_dir
         elif label_dir.is_dir():

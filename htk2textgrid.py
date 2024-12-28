@@ -25,8 +25,8 @@ def lab_to_textgrid(lab_file, output_file, tier_name='phones'):
 @click.command()
 @click.option('-t', '--tier', default='phones', help='Tier name to create. Default = "phones".')
 @click.option('-f', '--format', default='lab', help='Input format. Default = "lab". Note that only "lab" and "txt" are supported.')
-@click.option('--input_folder', required=True)
-@click.option('--output_folder', required=True)
+@click.option('-i','--input_folder', required=True)
+@click.option('-o','--output_folder', required=True)
 def htk2textgrid(tier, format, input_folder, output_folder):
     print(input_folder)
     if format not in ['lab', 'txt']:
@@ -42,8 +42,6 @@ def htk2textgrid(tier, format, input_folder, output_folder):
             output_path = output_folder / (input_path.stem + '.TextGrid')
             lab_to_textgrid(input_path, output_path, tier)
             click.echo(f"Converted {input_path} to {output_path}")
-        else:
-            click.echo(f"Skipping {input_path}: Not a valid HTK format file or not a file.")
 
 if __name__ == "__main__":
     htk2textgrid()

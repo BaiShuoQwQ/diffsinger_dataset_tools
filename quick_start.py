@@ -15,7 +15,6 @@ from modules.ds_tools.textgrid2ds import textgrid2ds
 from ds_dataset import ds_dataset
 
 
-
 def quick_start():
     with open('tools_config.yaml', 'r', encoding='utf-8') as file:
         data = yaml.safe_load(file)
@@ -72,8 +71,6 @@ def quick_start():
 
     #生成textgrid
     sofa_infer(SOFA_ckpt, wavs, lab, textgrids, "force", "Dictionary", "NoneAPDetector", "lab", "textgrid", True, dictionary=dictionary)
-    validate_labels(textgrids, wavs, dictionary, 'textgrid', True)
-    summary_pitch(wavs, textgrids)
     print("Step 4: SOFA complete")
 
     #呼吸标注
@@ -86,6 +83,8 @@ def quick_start():
     print("Step 6: move_bad complete")
 
     #生成ds
+    validate_labels(textgrids, wavs, dictionary, 'textgrid', True)
+    summary_pitch(wavs, textgrids)
     textgrid2ds(textgrids, wavs, ds, dictionary, use_some=True, some_model=SOME_ckpt)
     print("Step 7: ds complete")
 
