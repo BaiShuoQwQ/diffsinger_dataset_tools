@@ -1,7 +1,8 @@
 AP	AP
 SP	SP
 cl	cl
-CL	CL
+GS	GS
+EP	EP
 a	a
 i	i
 u	u

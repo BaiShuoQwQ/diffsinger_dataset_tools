@@ -21,14 +21,26 @@ def _gather_ds(tg_path, wav_path, dictionary, fix_words=False, some_infer=None):
         elif tier.name == 'words':
             words_tier = tier
 
-    ph_seq = [ph.mark for ph in phones_tier]
+    replacement_rules = {
+        'ap': 'AP',
+        'br': 'AP',
+        'pau': 'SP',
+        'sil': 'SP',
+        'sp': 'SP',
+        'CL': 'cl',
+    }
+
+    ph_seq = [replacement_rules.get(ph.mark, ph.mark) for ph in phones_tier]
     ph_dur = [ph.maxTime - ph.minTime for ph in phones_tier]
     ph_num = add_ph_num(ph_seq, str(dictionary))
     
     if fix_words:
         word = convert_ph_to_words(ph_seq, ph_num, dictionary)
     else:
-        word = [word.mark for word in words_tier]
+        if words_tier:
+            word = [word.mark for word in words_tier]
+        else:
+            word = ['a'] * len(ph_num)
 
     if (word[0]!= 'SP' and word[0]!= 'AP' and ph_num[0] == '1'):
          word.insert(0, 'SP')
