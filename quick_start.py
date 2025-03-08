@@ -6,10 +6,10 @@ import librosa
 from modules.ds_tools.loudness_norm import loudness_norm_file
 from modules.ds_tools.slicer import slice_audio
 from modules.ds_tools.wav2words import funasr_folder, pinyin_folder
-from SOFA_infer import sofa_infer
+from modules.SOFA.SOFA_infer import sofa_infer
 from validate_labels import validate_labels
 from summary_pitch import summary_pitch
-from FBL_infer import export
+from modules.FoxBreatheLabeler.FBL_infer import export
 from modules.ds_tools.filter_bad import move_bad
 from modules.ds_tools.textgrid2ds import textgrid2ds
 from ds_dataset import ds_dataset
@@ -56,6 +56,9 @@ def quick_start():
     for f in tqdm(norm.glob('*.wav')):
         if librosa.get_duration(filename=str(f)) > 10:
             slice_audio(f, wavs, db_threshold=-32)
+        else:
+            destination_f = wavs / f.name
+            shutil.move(f, destination_f)    
     for f in tqdm(wavs.glob('*.wav')):
         if librosa.get_duration(filename=str(f)) > 15:
             slice_audio(f, wavs, db_threshold=-24)
@@ -68,7 +71,6 @@ def quick_start():
     validate_labels(lab, wavs, dictionary, 'lab', True)
     print("Step 3: lab complete")
 
-
     #生成textgrid
     sofa_infer(SOFA_ckpt, wavs, lab, textgrids, "force", "Dictionary", "NoneAPDetector", "lab", "textgrid", True, dictionary=dictionary)
     print("Step 4: SOFA complete")
@@ -79,21 +81,22 @@ def quick_start():
 
     #筛选标注
     confidence = textgrids / "confidence.csv"
-    move_bad(wavs, textgrids, bad, confidence, ratio=0.1)
-    print("Step 6: move_bad complete")
+    move_bad(wavs, textgrids, bad, confidence, ratio=0.4)
+    print("Step 6: filter_bad complete")
+
 
     #生成ds
     validate_labels(textgrids, wavs, dictionary, 'textgrid', True)
     summary_pitch(wavs, textgrids)
-    textgrid2ds(textgrids, wavs, ds, dictionary, use_some=True, some_model=SOME_ckpt)
-    print("Step 7: ds complete")
+    textgrid2ds(textgrids, wavs, ds, dictionary, use_some=True, some_model=SOME_ckpt, round_midi=True)
+    print("Step 7: build_ds complete")
 
     #构建数据集
     ds_dataset(wavs, ds, dataset)
     validate_labels(dataset, wavs, dictionary, 'csv', summary=True)
     print("Step 8: dataset complete")
     print("Congratulations! All the steps have been completed.\nThis project is produced by Bai_Shuo.")
-    
+
     #清理文件
     # shutil.rmtree(norm)
     # shutil.rmtree(wavs)

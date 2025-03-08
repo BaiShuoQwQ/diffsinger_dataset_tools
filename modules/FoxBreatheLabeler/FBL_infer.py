@@ -8,7 +8,7 @@ import yaml
 from matplotlib import pyplot as plt
 from tqdm import tqdm
 
-from modules.trainCLS.FVFBLCLS import FBLCLS
+from .trainCLS.FVFBLCLS import FBLCLS
 
 
 def pbase_config(topc: dict, basec_list: List[str]) -> dict:

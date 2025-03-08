@@ -7,7 +7,7 @@ import librosa
 import numpy as np
 import soundfile
 import tqdm
-from textgrid import TextGrid, IntervalTier
+from textgrid import TextGrid
 
 
 
@@ -29,10 +29,9 @@ def build_dataset(wavs, tg, dataset, skip_silence_insertion, wav_subtype):
         tgfile = tg_dir / wavfile.with_suffix('.TextGrid').name
         tg = TextGrid()
         tg.read(str(tgfile))
-        # 查找名为'phones'的层级  
         phones_tier = None  
-        for tier in tg:  # 假设tg是可迭代的，并且直接迭代给出层级对象  
-            if tier.name == 'phones':  # 假设每个层级都有一个name属性  
+        for tier in tg:
+            if tier.name == 'phones':
                 phones_tier = tier  
                 break  
         

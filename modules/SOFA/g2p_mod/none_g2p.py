@@ -1,6 +1,6 @@
 import numpy as np
 
-from modules.g2p.base_g2p import BaseG2P
+from .base_g2p import BaseG2P
 
 
 class NoneG2P(BaseG2P):

@@ -50,7 +50,7 @@ def slice_tg(wavs, tg, out, preserve_sentence_names, wav_subtype, overwrite):
         max_ap_dur = 6.0
 
         start = 0.
-        SP_mark = {'SP', 'pau', 'sil'}
+        SP_mark = {'SP', 'pau', 'sil', 'cl'}
         AP_mark = {'AP', 'br', 'EP'}
         for ph in phones_tier:
 

@@ -15,6 +15,7 @@ class FilterBad():
         self.shortest_label = shortest_label
         self.noisy_length=noisy_length
         self.allowed_short_phones = ["p", "t", "k", "d", "l", "w", "y"]
+        
     #检测是否存在过短音素；是否存在过量有声SP
     def SP_bad(self, tg_file, wav_file):
         tg = TextGrid.fromFile(tg_file)
@@ -100,7 +101,7 @@ class FilterBad():
             else:
                 break
 
-def move_bad(wav_folder, tg_folder, out_folder, confidence=None,  ratio=0.05):
+def move_bad(wav_folder, tg_folder, out_folder, confidence=None, ratio=0.05):
     wav_folder = Path(wav_folder)
     tg_folder = Path(tg_folder)
     out_folder = Path(out_folder)

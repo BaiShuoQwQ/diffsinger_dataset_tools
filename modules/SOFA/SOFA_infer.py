@@ -6,16 +6,16 @@ import lightning as pl
 import numpy as np
 import torch
 import torch.nn as nn
-import modules.AP_detector
-import modules.g2p
-from modules.layer.backbone.unet import UNetBackbone
-from modules.layer.block.resnet_block import ResidualBasicBlock
-from modules.layer.scaling.stride_conv import DownSampling, UpSampling
-from modules.utils.get_melspec import MelSpecExtractor
-from modules.utils.load_wav import load_wav
-from modules.utils.plot import plot_for_valid
-from modules.utils.export_tool import Exporter
-from modules.utils.post_processing import post_processing
+from . import AP_detector
+from . import g2p_mod
+from .layer.backbone.unet import UNetBackbone
+from .layer.block.resnet_block import ResidualBasicBlock
+from .layer.scaling.stride_conv import DownSampling, UpSampling
+from .utils.get_melspec import MelSpecExtractor
+from .utils.load_wav import load_wav
+from .utils.plot import plot_for_valid
+from .utils.export_tool import Exporter
+from .utils.post_processing import post_processing
 from einops import repeat
 
 def forward_pass(T, S, prob_log, not_edge_prob_log, edge_prob_log, curr_ph_max_prob_log, dp, backtrack_s, ph_seq_id,
@@ -424,13 +424,13 @@ def sofa_infer(
 ):
     if not g2p.endswith("G2P"):
         g2p += "G2P"
-    g2p_class = getattr(modules.g2p, g2p)
+    g2p_class = getattr(g2p_mod, g2p)
     grapheme_to_phoneme = g2p_class(**kwargs)
     out_formats = [i.strip().lower() for i in out_formats.split(",")]
 
     if not ap_detector.endswith("APDetector"):
         ap_detector += "APDetector"
-    AP_detector_class = getattr(modules.AP_detector, ap_detector)
+    AP_detector_class = getattr(AP_detector, ap_detector)
     get_AP = AP_detector_class(**kwargs)
 
     grapheme_to_phoneme.set_in_format(in_format)

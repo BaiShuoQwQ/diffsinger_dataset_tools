@@ -1,8 +1,8 @@
 import torch
 import torch.nn as nn
 
-from modules.module_lib.attention.base_attention import Attention
-from modules.module_lib.conv.base_conv import conform_conv
+from ..module_lib.attention.base_attention import Attention
+from ..module_lib.conv.base_conv import conform_conv
 
 
 class conform_ffn(nn.Module):

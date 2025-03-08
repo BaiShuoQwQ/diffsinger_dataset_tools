@@ -1,9 +1,9 @@
 import numpy as np
 import torch
-import torch.nn as nn
+import torch.nn as nn 
 
-from modules.AP_detector.base_detector import BaseAPDetector
-from modules.utils.load_wav import load_wav
+from .base_detector import BaseAPDetector
+from ..utils.load_wav import load_wav
 
 
 class LoudnessSpectralcentroidAPDetector(BaseAPDetector):

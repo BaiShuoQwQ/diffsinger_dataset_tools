@@ -11,20 +11,13 @@ The following files from https://github.com/openvpi/MakeDiffSinger are protected
     modules.ds_tools.distribution.py
 
 The following files from https://github.com/autumn-DL/FoxBreatheLabeler are protected dual-licensed under the terms of the Apache License 2.0 and the GNU Affero General Public License v3.0 (AGPLv3).
-    FBL_infer.py
-    modules.trainCLS
-    modules.module_lib
-    modules.Models
-    modules.libs
+    modules.FoxBreatheLabeler
 
 The other files are protected under the terms of the Modified AGPLv3 License.
     Including the following files from https://github.com/qiuqiao/SOFA.
-        SOFA_infer.py
-        modules.AP_detector
-        modules.g2p
-        modules.layer
-        modules.utils
+        modules.SOFA
+
     Including the following files from https://github.com/openvpi/SOME.
         modules.some
-        modules.model
+
     And other files.

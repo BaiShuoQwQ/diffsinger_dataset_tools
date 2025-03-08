@@ -1,9 +1,9 @@
 import torch
 import torch.nn as nn
 
-from modules.layer.block.resnet_block import ResidualBasicBlock
-from modules.layer.scaling.base import BaseDowmSampling, BaseUpSampling
-from modules.layer.scaling.stride_conv import DownSampling, UpSampling
+from ..block.resnet_block import ResidualBasicBlock
+from ..scaling.base import BaseDowmSampling, BaseUpSampling
+from ..scaling.stride_conv import DownSampling, UpSampling
 
 
 class UNetBackbone(nn.Module):

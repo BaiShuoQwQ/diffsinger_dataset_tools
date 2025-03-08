@@ -1,6 +1,6 @@
 import warnings
 
-from modules.g2p.base_g2p import BaseG2P
+from .base_g2p import BaseG2P
 
 
 class DictionaryG2P(BaseG2P):

@@ -1,10 +1,10 @@
 import torch.nn as nn
 
-from modules.Models.CVNT import CVNT
+from ..Models.CVNT import CVNT
 
-from modules.trainCLS.baseCLS import BasicCLS
-
-
+from .baseCLS import BasicCLS
+0
+1
 class FBLCLS(BasicCLS):
     def __init__(self, config):
         super().__init__(config)

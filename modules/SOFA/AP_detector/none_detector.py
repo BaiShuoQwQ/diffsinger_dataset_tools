@@ -1,4 +1,4 @@
-from modules.AP_detector.base_detector import BaseAPDetector
+from .base_detector import BaseAPDetector
 
 
 class NoneAPDetector(BaseAPDetector):

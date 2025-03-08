@@ -26,7 +26,8 @@ def filter_kwargs(dict_to_filter, kwarg_obj):
 def build_object_from_class_name(cls_str, parent_cls, *args, **kwargs):
     import importlib
 
-    pkg = ".".join(cls_str.split(".")[:-1])
+    #pkg = ".".join(cls_str.split(".")[:-1])
+    pkg = 'modules.some.model.Gmidi_conform'
     cls_name = cls_str.split(".")[-1]
     cls_type = getattr(importlib.import_module(pkg), cls_name)
     if parent_cls is not None:

@@ -1,6 +1,6 @@
 import torch.nn as nn
 
-from modules.layer.scaling.base import BaseDowmSampling, BaseUpSampling
+from .base import BaseDowmSampling, BaseUpSampling
 
 
 class DownSampling(BaseDowmSampling):

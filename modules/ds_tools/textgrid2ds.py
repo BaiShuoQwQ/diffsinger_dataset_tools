@@ -8,7 +8,7 @@ from modules.ds_tools.fix_words import convert_ph_to_words
 from modules.some.SOME_infer import SOMEINFER
 
 
-def _gather_ds(tg_path, wav_path, dictionary, fix_words=False, some_infer=None):
+def _gather_ds(tg_path, wav_path, dictionary, fix_words=False, some_infer=None, round_midi=False):
     print(tg_path)
     tg_path = Path(tg_path)
     wav_path = Path(wav_path)
@@ -60,6 +60,9 @@ def _gather_ds(tg_path, wav_path, dictionary, fix_words=False, some_infer=None):
     if some_infer:
         note_seq, note_dur = some_infer.batch_infer(wav_path, ph_dur, ph_num)
 
+    if round_midi:
+        note_seq = em.note_seq_round(note_seq)
+
     note_slur = ["0" for _ in note_dur]
 
 
@@ -83,7 +86,7 @@ def _gather_ds(tg_path, wav_path, dictionary, fix_words=False, some_infer=None):
     
     return(ds_content)
 
-def textgrid2ds(tg_folder, wav_folder, ds_folder, dictionary, fix_words=False, use_some=False, some_model=None):
+def textgrid2ds(tg_folder, wav_folder, ds_folder, dictionary, fix_words=False, use_some=False, some_model=None, round_midi=False):
     tg_folder = Path(tg_folder)
     wav_folder = Path(wav_folder)
     ds_folder = Path(ds_folder)
@@ -97,7 +100,7 @@ def textgrid2ds(tg_folder, wav_folder, ds_folder, dictionary, fix_words=False, u
         wav_file_path = wav_folder / f"{tg_file_name}.wav"
         
         if wav_file_path.exists():
-            ds_content = _gather_ds(tg_file, wav_file_path, dictionary, fix_words=fix_words, some_infer=some_infer)
+            ds_content = _gather_ds(tg_file, wav_file_path, dictionary, fix_words=fix_words, some_infer=some_infer, round_midi=round_midi)
             ds_file = ds_folder / f"{tg_file_name}.ds"
             with open(ds_file, "w", encoding="utf-8") as f:
                 json.dump(ds_content, f, ensure_ascii=False, indent=4)
